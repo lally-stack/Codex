@@ -113,7 +113,7 @@ class AccediController extends Controller
      */
     public static function hidePsw($psw, $sale)
     {
-        return hash("sha512", $sale . $psw);
+        return hash("sha512", $psw . $sale);
     }
 
         /**

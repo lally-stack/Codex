@@ -33,18 +33,18 @@ if (!defined('_VERS')) {
 
 // Rotte open
 Route::post(_VERS . '/registrati', [RegistrazioneController::class, 'store']);
-
+Route::get(_VERS . '/accedi/{utente}/{hash?}', [AccediController::class, 'show']);
 Route::get(_VERS . '/testLogin', function () {
 
     // ADMIN
-    // $hashUser = "4dfb2a43052d61abf30b58a9e77e5f439b42a01ae1f75dbd1d2f6a1bf4ea685d2ba82a7536a0734654c0a6587ca89a2b0f62a63a2fab0d1657ad3b900f3794fe";
-    // $pwd      = "e6c83b282aeb2e022844595721cc00bbda47cb24537c1779f9bb84f04039e1676e6ba8573e588da1052510e3aa0a32a9e55879ae22b0c2d62136fc0a3e85f8bb";
-    // $salt     = "a0c299b71a9e59d5ebb07917e70601a3570aa103e99a7bb65a58e780ec9077b1902d1dedb31b1457beda595fe4d71d779b6ca9cad476266cc07590e31d84b206";
+    $hashUser = "4dfb2a43052d61abf30b58a9e77e5f439b42a01ae1f75dbd1d2f6a1bf4ea685d2ba82a7536a0734654c0a6587ca89a2b0f62a63a2fab0d1657ad3b900f3794fe";
+    $pwd      = "e6c83b282aeb2e022844595721cc00bbda47cb24537c1779f9bb84f04039e1676e6ba8573e588da1052510e3aa0a32a9e55879ae22b0c2d62136fc0a3e85f8bb";
+    $salt     = "a0c299b71a9e59d5ebb07917e70601a3570aa103e99a7bb65a58e780ec9077b1902d1dedb31b1457beda595fe4d71d779b6ca9cad476266cc07590e31d84b206";
 
     // USER
-    $hashUser = "d5495b12b9e9d1d44bb5cafd4a30906b426f04e5035e972d0d150327450d07bc5304eeeb3773cc091e99f1d2024606a00e6458df18e9d4adf682fe12f6fb0ec9";
-    $pwd      = "718fc3d99550f56d05c0ededde8c400e6494966a3baa9d29664b4b98e58531f96584b1912d5911805e7d1e0476b611c3908cfb4b9c67309c3da3ec77fec44c6d";
-    $salt     = "858e854a56c6265b8aca438324751c5fd878e193cfa8cdb16141b5f467b7b398069a7efaf9dc39bba4713ea38fb6ea5c9b8e7b925bef755dcb27d57bf1dc9972";
+    //     $hashUser = "d5495b12b9e9d1d44bb5cafd4a30906b426f04e5035e972d0d150327450d07bc5304eeeb3773cc091e99f1d2024606a00e6458df18e9d4adf682fe12f6fb0ec9";
+    //     $pwd      = "718fc3d99550f56d05c0ededde8c400e6494966a3baa9d29664b4b98e58531f96584b1912d5911805e7d1e0476b611c3908cfb4b9c67309c3da3ec77fec44c6d";
+    //     $salt     = "858e854a56c6265b8aca438324751c5fd878e193cfa8cdb16141b5f467b7b398069a7efaf9dc39bba4713ea38fb6ea5c9b8e7b925bef755dcb27d57bf1dc9972";
 
     $hashSalePsw = AccediController::hidePsw($pwd, $salt);
     AccediController::testLogin($hashUser, $hashSalePsw);
@@ -117,5 +117,4 @@ Route::middleware(['autenticazione', 'contattoRuolo:Amministratore'])->group(fun
     Route::delete(_VERS . "/deleteIndirizzo/{idIndirizzo}", [IndirizzoController::class, 'destroy']);
 });
 
-// Route::get(_VERS . '/accedi/{utente}/{hash?}', [AccediController::class, 'show']);
 
