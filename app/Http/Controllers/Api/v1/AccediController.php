@@ -33,33 +33,6 @@ class AccediController extends Controller
 
 
     /**
-     * Controllo sull'utente
-     *
-     * @param  string $utente
-     * @return \Illuminate\Http\Response
-     */
-    protected static function checkUser($utente)
-    {
-        $sale = hash("sha512", trim("ciao"));
-
-        if (contattiAuth::validUserForLoginExists($utente)) {
-            $auth = contattiAuth::where('user', $utente)->first();
-
-            $auth->secretJWT = hash("sha512", trim(Utility::strRan(200)));
-            $auth->inizioSfida = time();
-            $auth->save();
-
-            $recordPsw = contattiPsw::password($auth->idContatto);
-            $recordPsw->sale = $sale;
-            $recordPsw->save();
-        } else {
-        }
-
-        $dati = array("sale" => $sale);
-        return $dati;
-    }
-
-    /**
      * Controllo sulla psw 
      * 
      * @param string $utente
@@ -128,9 +101,6 @@ class AccediController extends Controller
         print_r(AccediController::checkPsw($hashUtente, $hashPassword));
     }
 
-
-
-
     /**
      * hash di sale e psw
      * 
@@ -144,5 +114,32 @@ class AccediController extends Controller
     public static function hidePsw($psw, $sale)
     {
         return hash("sha512", $sale . $psw);
+    }
+
+        /**
+     * Controllo sull'utente
+     *
+     * @param  string $utente
+     * @return \Illuminate\Http\Response
+     */
+    protected static function checkUser($utente)
+    {
+        $sale = hash("sha512", trim("ciao"));
+
+        if (contattiAuth::validUserForLoginExists($utente)) {
+            $auth = contattiAuth::where('user', $utente)->first();
+
+            $auth->secretJWT = hash("sha512", trim(Utility::strRan(200)));
+            $auth->inizioSfida = time();
+            $auth->save();
+
+            $recordPsw = contattiPsw::password($auth->idContatto);
+            $recordPsw->sale = $sale;
+            $recordPsw->save();
+        } else {
+        }
+
+        $dati = array("sale" => $sale);
+        return $dati;
     }
 }
