@@ -16,7 +16,6 @@ class ContattoRuolo
      */
     public function handle(Request $request, Closure $next, ...$requiredRuoli)
     {
-        // echo("CAZZO");
         abort_if(0 === count(array_intersect($requiredRuoli, $request["contattoRuolo"])), 403, "Non hai accesso a questa risorsa");
         return $next($request);
     }

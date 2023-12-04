@@ -30,14 +30,11 @@ class AuthServiceProvider extends ServiceProvider
 
         if (app()->environment() !== "testing")  {
 
-            // echo("Passo 1");
             ContattiRuoli::all()->each(
                 function (ContattiRuoli $ruolo) {
-                    // echo("Passo 2");
                     Gate::define(
                         $ruolo->nome,
                         function (Contatto $contatto) use ($ruolo) {
-                            // print_r("Ciao");
                             return $contatto->ruoli->contains('nome', $ruolo->nome);
                         }
                     );
@@ -50,7 +47,6 @@ class AuthServiceProvider extends ServiceProvider
                     function (Contatto $contatto) use ($abilita) {
                         $check = false;
                         foreach ($contatto->ruoli as $item) {
-                            // echo("Prova:" . $item->abilita."<br>");
                             if ($item->abilita->contains('skill', $abilita->skill)) {
                                 $check = true;
                                 break;
